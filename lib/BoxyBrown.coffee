@@ -1,4 +1,3 @@
-arrayUnique = require('./Utils.coffee').arrayUnique
 _console = require('./Console.coffee')
 CoffeeJs = require('./CoffeeJs.coffee')
 ScssCss = require('./ScssCss.coffee')
