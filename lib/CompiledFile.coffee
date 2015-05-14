@@ -1,4 +1,5 @@
 fs = require('fs')
+_console = require('./Console.coffee')
 
 module.exports = class CompiledFile
 

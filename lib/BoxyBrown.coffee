@@ -1,4 +1,3 @@
-_console = require('./Console.coffee')
 CoffeeJs = require('./CoffeeJs.coffee')
 ScssCss = require('./ScssCss.coffee')
 

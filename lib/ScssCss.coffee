@@ -2,6 +2,7 @@ CompiledFile = require('./CompiledFile.coffee')
 StringFile = require('./StringFile.coffee')
 sass = require('node-sass')
 arrayUnique = require('./Utils.coffee').arrayUnique
+_console = require('./Console.coffee')
 
 
 module.exports = class ScssCss extends CompiledFile
