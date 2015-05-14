@@ -3,6 +3,8 @@ StringFile = require('./StringFile.coffee')
 browserify = require('browserify')
 arrayUnique = require('./Utils.coffee').arrayUnique
 _console = require('./Console.coffee')
+uglifyify = require('uglifyify')
+coffeeify = require('coffeeify')
 
 
 module.exports = class CoffeeJs extends CompiledFile
@@ -29,8 +31,8 @@ module.exports = class CoffeeJs extends CompiledFile
     @compiledSourceMap = new StringFile('application/json') if @debug
     
     @B = browserify({debug: @debug})
-    @B.transform('coffeeify')
-    @B.transform('uglifyify')
+    @B.transform(coffeeify)
+    @B.transform(uglifyify)
     @B.add(@source)
     
     @B.on('file', (file, id, parent)=>
