@@ -3,10 +3,6 @@ _console = require('./Console.coffee')
 CoffeeJs = require('./CoffeeJs.coffee')
 ScssCss = require('./ScssCss.coffee')
 
-fs = require('fs')
-browserify = require('browserify')
-crypto = require('crypto')
-sass = require('node-sass')
 
 
 

@@ -1,5 +1,6 @@
 CompiledFile = require('./CompiledFile.coffee')
 StringFile = require('./StringFile.coffee')
+browserify = require('browserify')
 
 
 module.exports = class CoffeeJs extends CompiledFile

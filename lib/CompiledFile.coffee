@@ -1,3 +1,5 @@
+fs = require('fs')
+
 module.exports = class CompiledFile
 
   constructor: (conf) ->

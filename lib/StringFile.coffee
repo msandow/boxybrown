@@ -1,3 +1,5 @@
+crypto = require('crypto')
+
 module.exports = class StringFile
   constructor: (@contentType = 'application/octet') ->
     @contents = ''
