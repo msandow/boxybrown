@@ -12,3 +12,6 @@ module.exports =
         retArr.push(item)
 
     retArr
+    
+  escapeRegExp: (str) ->
+    str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")

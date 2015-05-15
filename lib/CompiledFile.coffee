@@ -7,6 +7,7 @@ module.exports = class CompiledFile
     @route = conf.route
     @source = conf.source
     @debug = conf.debug
+    @tokens = conf.tokens
     @compiling = false
     @sourceFiles = []
     @withWatchers = {}
