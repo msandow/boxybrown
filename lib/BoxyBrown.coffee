@@ -1,6 +1,7 @@
 CoffeeJs = require('./CoffeeJs.coffee')
 ScssCss = require('./ScssCss.coffee')
 Tokenized = require('./Tokenized.coffee')
+TokenReplacer = require('./TokenReplacer')
 
 
 
@@ -32,3 +33,5 @@ module.exports =
   Tokenized: (conf = {}) ->
     virtual = new Tokenized(buildConfigs(conf))
     virtual.setUp().express()
+
+  TokenReplacer: TokenReplacer
