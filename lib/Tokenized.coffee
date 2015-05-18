@@ -2,7 +2,7 @@ CompiledFile = require('./CompiledFile.coffee')
 StringFile = require('./StringFile.coffee')
 _console = require('./Console.coffee')
 mime = require('mime')
-TokenReplacer = require('./TokenReplacer')
+TokenReplacer = require('./Utils').TokenReplacer
 
 
 module.exports = class Tokenized extends CompiledFile
