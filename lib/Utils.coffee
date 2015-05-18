@@ -29,18 +29,7 @@ ut.TokenReplacer = (path, tokens, cb) ->
       finds = ut.arrayUnique(data.match(/#\{(.*?)\}/gm))
       replaces = finds.map((f)=>
         str = f.substring(2, f.length-1)
-        str = tokens[str]
-        
-        if str is undefined
-          return ''
-        
-        if typeof str is 'function'
-          str = str()
-        
-        if ['number', 'string'].indexOf(typeof str) > -1
-          return str
-        
-        return str.toString()
+        return if tokens[str] isnt undefined then tokens[str] else ''
       )
 
       for find, idx in finds
