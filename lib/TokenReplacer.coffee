@@ -1,7 +1,5 @@
 fs = require('fs')
 
-walker = (source, tokens)
-
 module.exports = (path, tokens, cb) ->
 
   fs.readFile(path, {encoding: 'utf-8'}, (err, data)=>
