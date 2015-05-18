@@ -1,7 +1,7 @@
 CoffeeJs = require('./CoffeeJs.coffee')
 ScssCss = require('./ScssCss.coffee')
 Tokenized = require('./Tokenized.coffee')
-TokenReplacer = require('./TokenReplacer')
+TokenReplacer = require('./Utils').TokenReplacer
 
 
 
