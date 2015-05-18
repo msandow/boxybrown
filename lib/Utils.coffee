@@ -2,7 +2,7 @@ fs = require('fs')
 
 ut = {}
 
-ut.arrayUnique: (arr = []) ->
+ut.arrayUnique = (arr = []) ->
   retArr = []
   hash = {}
 
@@ -17,11 +17,11 @@ ut.arrayUnique: (arr = []) ->
   retArr
 
 
-ut.escapeRegExp: (str) ->
+ut.escapeRegExp = (str) ->
   str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")
 
 
-ut.TokenReplacer: (path, tokens, cb) ->
+ut.TokenReplacer = (path, tokens, cb) ->
   fs.readFile(path, {encoding: 'utf-8'}, (err, data)=>
     cb(err, null) if err
 
