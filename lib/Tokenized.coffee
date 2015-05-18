@@ -1,8 +1,6 @@
 CompiledFile = require('./CompiledFile.coffee')
 StringFile = require('./StringFile.coffee')
 _console = require('./Console.coffee')
-arrayUnique = require('./Utils.coffee').arrayUnique
-escapeRegExp = require('./Utils.coffee').escapeRegExp
 mime = require('mime')
 TokenReplacer = require('./TokenReplacer')
 

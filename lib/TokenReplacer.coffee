@@ -1,4 +1,6 @@
 fs = require('fs')
+arrayUnique = require('./Utils.coffee').arrayUnique
+escapeRegExp = require('./Utils.coffee').escapeRegExp
 
 module.exports = (path, tokens, cb) ->
 
