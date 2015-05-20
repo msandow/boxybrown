@@ -46,8 +46,6 @@ module.exports = class CompiledFile
       if req.method is 'GET' and req.originalUrl is @route + ".map" and @debug
         @responder(@compiledSourceMap, req, res)
 
-      next()
-
 
 
   onBuildError: (msg) ->
