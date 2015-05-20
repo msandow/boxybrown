@@ -43,8 +43,11 @@ module.exports = class CompiledFile
       if req.method is 'GET' and req.originalUrl is @route
         @responder(@compiledStream, req, res)
 
-      if req.method is 'GET' and req.originalUrl is @route + ".map" and @debug
+      else if req.method is 'GET' and req.originalUrl is @route + ".map" and @debug
         @responder(@compiledSourceMap, req, res)
+        
+      else
+        next()
 
 
 
