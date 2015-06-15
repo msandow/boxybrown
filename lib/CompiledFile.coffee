@@ -10,6 +10,7 @@ module.exports = class CompiledFile
     @tokens = conf.tokens
     @compiling = false
     @sourceFiles = []
+    @hasBuildError = false
     @withWatchers = {}
 
 
@@ -18,6 +19,11 @@ module.exports = class CompiledFile
 
 
   responder: (stringFile, req, res) ->
+    if @hasBuildError
+      res.writeHead(424)
+      res.end()
+      return
+
     if req.headers['if-none-match'] isnt undefined and req.headers['if-none-match'] is stringFile.etag
       res.writeHead(304,
         'ETag': stringFile.etag

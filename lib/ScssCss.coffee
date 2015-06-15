@@ -34,8 +34,10 @@ module.exports = class ScssCss extends CompiledFile
         if err
           @onBuildError(err.message)
           @compiling = false
+          @hasBuildError = true
           return
         
+        @hasBuildError = false
         @sourceFiles = arrayUnique(result.stats.includedFiles)
         
         if @debug

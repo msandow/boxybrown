@@ -61,9 +61,11 @@ module.exports = class CoffeeJs extends CompiledFile
         
         .on('error', (msg)=>
           @onBuildError(msg)
+          @hasBuildError = true
         )
         
         .on('end', ()=>
+          @hasBuildError = false
           @sourceFiles = arrayUnique(@sourceFiles)
           
           @buildSourceMap() if @debug
