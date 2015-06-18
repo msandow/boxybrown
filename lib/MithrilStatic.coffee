@@ -1,21 +1,16 @@
 _console = require('./Console.coffee')
 fs = require('fs')
+utils = require('./Utils.coffee')
 
 
-#buildStaticRoute = (route, module) ->
-#  Router.get(route, (req, res)->
-#    fs.readFile("#{__dirname}/../../public/index.html", "utf8", (error, data)->
-#      m.toString(module, (html)->
-#        res.send(
-#          utils.tokenReplacement({
-#            content: html
-#            keywords: 'foo ,bar'
-#            description: 'app'
-#          },data)
-#        )
-#      , req, res)
-#    )
-#  )
+buildStaticRoute = (route, module, rootHash, conf) ->
+  rootHash[route] = (req, res) ->
+    m.toString(module, (html)->
+      conf.tokens.compiledHtml = html
+      utils.TokenReplacer(conf.htmlTemplate, conf.tokens, (err, data)->
+        res.send(err or data)
+      )
+    , req, res)
 
 
 module.exports = 
@@ -29,10 +24,13 @@ module.exports =
       _console.error("No HTML template file to serve provided to MithrilStatic")
       return
     
+    conf.tokens = {} if typeof conf.tokens isnt 'object'
+    
     appFile = require(conf.source)()
     appRoutes = {}
-    console.log(global.m)
-    process.exit(1)
+    
+    if global.m is undefined
+      require('./mithril.app.coffee')
     
     if not Array.isArray(appFile)
       _console.error("Mithril app file #{conf.source} doesn't return an array of modules")
@@ -41,7 +39,10 @@ module.exports =
     for module in appFile
       if Array.isArray(module.route)
         for subRoute in module.route
-          buildStaticRoute(subRoute, module, appRoutes)
+          buildStaticRoute(subRoute, module, appRoutes, conf)
       else
-        buildStaticRoute(module.route, module, appRoutes)
-
+        buildStaticRoute(module.route, module, appRoutes, conf)
+    
+    
+    console.log(appRoutes)
+    process.exit(1)
