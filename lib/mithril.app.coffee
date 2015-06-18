@@ -1,7 +1,7 @@
 "use strict"
 
 isNode = typeof window is 'undefined'
-m = if isNode then require('./mithril.js') else window.m
+m = if isNode then require(__dirname + '/mithril.js') else window.m
 
 if isNode and not global.m
   global.m = m
@@ -374,8 +374,6 @@ Object.defineProperties(m,
             html += newHtml
             cb(html)
           , req, res)
-
-      22
 )
 
   
