@@ -2,6 +2,7 @@ CoffeeJs = require('./CoffeeJs.coffee')
 ScssCss = require('./ScssCss.coffee')
 Tokenized = require('./Tokenized.coffee')
 TokenReplacer = require('./Utils').TokenReplacer
+MithrilStatic = require('./MithrilStatic.coffee')
 
 
 
@@ -35,3 +36,7 @@ module.exports =
     virtual.setUp().express()
 
   TokenReplacer: TokenReplacer
+
+  MithrilStatic: (conf ={}) ->
+    MithrilStatic.express(conf)
+
