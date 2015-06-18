@@ -30,7 +30,10 @@ module.exports =
     appRoutes = {}
     
     if global.m is undefined
-      require('./mithril.app.coffee')
+      if conf.mithrilAppFile is undefined
+        _console.error("No global m variable and no mithrilAppFile path provided to MithrilStatic")
+        return
+      require(conf.mithrilAppFile)
     
     if not Array.isArray(appFile)
       _console.error("Mithril app file #{conf.source} doesn't return an array of modules")
