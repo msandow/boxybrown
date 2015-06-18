@@ -39,4 +39,3 @@ module.exports =
 
   MithrilStatic: (conf ={}) ->
     MithrilStatic.express(conf)
-

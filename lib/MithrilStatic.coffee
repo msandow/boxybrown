@@ -1,17 +1,5 @@
 _console = require('./Console.coffee')
-
-
-module.exports = 
-
-  express: (conf) ->
-    if not conf.source
-      _console.error("No source file provided to MithrilStatic")
-      process.exit(1)
-    
-    appFile = require(conf.source)
-    console.log(appFile())
-    process.exit(1)
-
+fs = require('fs')
 
 
 #buildStaticRoute = (route, module) ->
@@ -28,10 +16,32 @@ module.exports =
 #      , req, res)
 #    )
 #  )
-#
-#for deskTopModule in desktopStaticApp()
-#  if Array.isArray(deskTopModule.route)
-#    for subRoute in deskTopModule.route
-#      buildStaticRoute(subRoute, deskTopModule)
-#  else
-#    buildStaticRoute(deskTopModule.route, deskTopModule)
+
+
+module.exports = 
+
+  express: (conf) ->
+    if not conf.source
+      _console.error("No source file provided to MithrilStatic")
+      return
+    
+    if not conf.htmlTemplate
+      _console.error("No HTML template file to serve provided to MithrilStatic")
+      return
+    
+    appFile = require(conf.source)()
+    appRoutes = {}
+    console.log(global.m)
+    process.exit(1)
+    
+    if not Array.isArray(appFile)
+      _console.error("Mithril app file #{conf.source} doesn't return an array of modules")
+      return
+    
+    for module in appFile
+      if Array.isArray(module.route)
+        for subRoute in module.route
+          buildStaticRoute(subRoute, module, appRoutes)
+      else
+        buildStaticRoute(module.route, module, appRoutes)
+
