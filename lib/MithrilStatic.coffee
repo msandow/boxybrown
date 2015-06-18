@@ -8,7 +8,7 @@ buildStaticRoute = (route, module, rootHash, conf) ->
     m.toString(module, (html)->
       conf.tokens.compiledHtml = html
       utils.TokenReplacer(conf.htmlTemplate, conf.tokens, (err, data)->
-        res.send(err or data)
+        res.end(err or data)
       )
     , req, res)
 
@@ -44,5 +44,9 @@ module.exports =
         buildStaticRoute(module.route, module, appRoutes, conf)
     
     
-    console.log(appRoutes)
-    process.exit(1)
+    (req, res, next)=>
+      if req.method is 'GET' and appRoutes[req.originalUrl]
+        appRoutes[req.originalUrl](req, res)
+        
+      else
+        next()
