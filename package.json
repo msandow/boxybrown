@@ -1,7 +1,14 @@
 {
   "name": "BoxyBrown",
-  "version": "0.5.0",
+  "description": "A simple tool for serving CoffeeScript and SASS files to browsers, complete with sourcemaps",
+  "version": "0.5.1",
+  "author": "Mitch Sandow",
   "main": "lib/BoxyBrown.js",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/msandow/BoxyBrown.git"
+  },
+  "license": "MIT",
   "dependencies": {
     "uglifyify ": "=3.0.1",
     "browserify": "=10.1.3",
