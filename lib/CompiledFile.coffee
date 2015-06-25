@@ -7,6 +7,7 @@ module.exports = class CompiledFile
     @route = conf.route
     @source = conf.source
     @debug = conf.debug
+    @silent = conf.silent
     @tokens = conf.tokens
     @compiling = false
     @sourceFiles = []

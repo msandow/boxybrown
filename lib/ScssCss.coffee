@@ -47,7 +47,7 @@ module.exports = class ScssCss extends CompiledFile
           @compiledStream.set(result.css.toString())
 
         @setUpWatchers() if @debug
-        _console.info("#{@source} compiled") if @debug
+        _console.info("#{@source} compiled") if @debug and not @silent
         
         @compiling = false
       )

@@ -70,7 +70,7 @@ module.exports = class CoffeeJs extends CompiledFile
           
           @buildSourceMap() if @debug
           @setUpWatchers() if @debug
-          _console.info("#{@source} compiled") if @debug
+          _console.info("#{@source} compiled") if @debug and not @silent
           
           @compiling = false
         )
