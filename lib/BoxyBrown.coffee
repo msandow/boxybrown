@@ -3,6 +3,7 @@ ScssCss = require('./ScssCss.coffee')
 LessCss = require('./LessCss.coffee')
 Tokenized = require('./Tokenized.coffee')
 TokenReplacer = require('./Utils').TokenReplacer
+Remote = require('./Remote.coffee')
 
 
 
@@ -42,3 +43,7 @@ module.exports =
     virtual.setUp().express()
 
   TokenReplacer: TokenReplacer
+
+  Remote: (conf = {}) ->
+    virtual = new Remote(buildConfigs(conf))
+    virtual.setUp().express()

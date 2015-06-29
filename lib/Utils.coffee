@@ -33,7 +33,8 @@ ut.TokenReplacer = (path, tokens, cb) ->
       )
 
       for find, idx in finds
-        data = data.replace(new RegExp(ut.escapeRegExp(find),'gm'), replaces[idx])
+        str = if typeof replaces[idx] is 'object' then JSON.stringify(replaces[idx]) else replaces[idx]
+        data = data.replace(new RegExp(ut.escapeRegExp(find),'gm'), str)
 
     cb(null, data)
   )

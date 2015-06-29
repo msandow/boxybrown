@@ -33,6 +33,8 @@ module.exports = class
 
     for own testdesc, testit of @suite
       describe(testdesc, ->
+        this.timeout(5000)
+      
         before(()->
           self.before.call(self)
           self.app.use(self.router)

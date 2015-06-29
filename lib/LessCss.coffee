@@ -37,8 +37,9 @@ module.exports = class LessCss extends CompiledFile
           filename: path.resolve(@source)
         
         if @debug
-          opts.sourceMap = {}
-          opts.sourceMap.sourceMapURL = @route + ".map"
+          opts.sourceMap = 
+            sourceMapURL: @route + ".map"
+            outputSourceFiles: true
 
         less.render(data, opts,
           (err, result) =>
@@ -49,7 +50,7 @@ module.exports = class LessCss extends CompiledFile
               return
 
             @hasBuildError = false
-            @sourceFiles = arrayUnique(result.imports.push(path.resolve(@source)))
+            @sourceFiles = arrayUnique(result.imports.concat(path.resolve(@source)))
             
             @compiledStream.set(result.css)
             

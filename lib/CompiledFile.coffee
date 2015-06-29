@@ -20,27 +20,35 @@ module.exports = class CompiledFile
 
 
   responder: (stringFile, req, res) ->
-    if @hasBuildError
-      res.writeHead(424)
-      res.end()
-      return
+    done = ()=>
+      if @hasBuildError
+        res.writeHead(424)
+        res.end()
+        return
 
-    if req.headers['if-none-match'] isnt undefined and req.headers['if-none-match'] is stringFile.etag
-      res.writeHead(304,
-        'ETag': stringFile.etag
-        'Content-Type': stringFile.contentType
-      )    
-      res.end()    
-    else
-      res.writeHead(200,
-        'ETag': stringFile.etag
-        'Content-Type': stringFile.contentType
+      if req.headers['if-none-match'] isnt undefined and req.headers['if-none-match'] is stringFile.etag
+        res.writeHead(304,
+          'ETag': stringFile.etag
+          'Content-Type': stringFile.contentType
+        )    
+        res.end()    
+      else
+        res.writeHead(200,
+          'ETag': stringFile.etag
+          'Content-Type': stringFile.contentType
+        )
+        res.end(stringFile.contents)
+    
+    if typeof @tokens is 'function'
+      @build(=>
+        done()
       )
-      res.end(stringFile.contents)
+    else
+      done()
 
 
 
-  build: () ->
+  build: (cb=(->)) ->
     true
 
 

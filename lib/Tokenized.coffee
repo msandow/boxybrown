@@ -11,24 +11,33 @@ module.exports = class Tokenized extends CompiledFile
     @compiledStream = new StringFile(mime.lookup(@source))
     @sourceFiles = [@source]
     @setUpWatchers() if @debug
-    @build()
+    @build() if typeof @tokens isnt 'function'
     
     @
 
 
-  build: () ->
+  build: (cb=(->)) ->
     if !@compiling
-    
       @compiling = true
       @compiledStream.reset()
       
-      TokenReplacer(@source, @tokens, (err, data)=>
-        @compiling = false
-        
-        if err
-          _console.error(err)
-          return
-        
-        @compiledStream.set(data)
-        _console.info("#{@source} compiled with #{JSON.stringify(@tokens)}") if @debug 
-      )
+      done = (tokens, cb)=>
+        TokenReplacer(@source, tokens, (err, data)=>
+          @compiling = false
+
+          if err
+            _console.error(err)
+            cb()
+            return
+
+          @compiledStream.set(data)
+          _console.info("#{@source} compiled with #{JSON.stringify(@tokens)}") if @debug
+          cb()
+        )
+      
+      if typeof @tokens is 'function'
+        @tokens((tokens)=>
+          done(tokens, cb)
+        )
+      else
+        done(@tokens, cb)
