@@ -29,6 +29,8 @@
     "test": "./node_modules/.bin/mocha tests/ --compilers coffee:coffee-script/register"
   },
   "bin": {
-    "coffeejs": "./bin/coffeejs"
+    "coffeejs": "./bin/coffeejs",
+    "lesscss": "./bin/lesscss",
+    "scsscss": "./bin/scsscss"
   }
 }
