@@ -26,7 +26,7 @@ module.exports = class CoffeeJs extends CompiledFile
 
 
 
-  setUp: () ->
+  setUp: (doBuild = true) ->
     @compiledStream = new StringFile('text/javascript')
     @compiledSourceMap = new StringFile('application/json') if @debug
     
@@ -39,7 +39,7 @@ module.exports = class CoffeeJs extends CompiledFile
       @sourceFiles.push(file)
     )
     
-    @build()
+    @build() if doBuild
     
     @
 
@@ -74,3 +74,24 @@ module.exports = class CoffeeJs extends CompiledFile
           
           @compiling = false
         )
+
+
+  run: (cb) ->
+    @setUp(false)
+    
+    @B
+      .bundle()
+
+      .on('data', (chunk)=>
+        @compiledStream.append(chunk)
+      )
+
+      .on('error', (msg)=>
+        console.error(msg)
+        cb.call(@)
+      )
+
+      .on('end', ()=>
+        @buildSourceMap() if @debug
+        cb.call(@)
+      )

@@ -48,8 +48,13 @@ module.exports = class CompiledFile
 
 
 
-  build: (cb=(->)) ->
+  build: () ->
     true
+
+
+
+  run: (cb) ->
+    cb.call(@)
 
 
 

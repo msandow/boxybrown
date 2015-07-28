@@ -3,6 +3,7 @@ expect = require('chai').expect
 base = require('./base.coffee')
 Boxy = require('./../lib/BoxyBrown.coffee')
 async = require('async')
+exec = require('child_process').exec
 
 suite = new base().set(
   'CoffeeJs':
@@ -81,6 +82,32 @@ suite = new base().set(
             cb()
           )
 
+      ],()->
+        done()
+      )
+
+    'Should compare CLI and server output': (done) ->
+      async.series([
+        (cb)=>
+          @request('/js/js2.js', (err, response, body)=>
+            cmd = "bin/coffeejs tests/files/basic.coffee --debug /js/js2.js"
+
+            exec(cmd, (err, stdout, stderr)=>
+              expect(stdout.trim()).to.equal(body)
+              cb()
+            )
+          )
+          
+        (cb)=>
+          @request('/js/js2.js.map', (err, response, body)=>
+            cmd = "bin/coffeejs tests/files/basic.coffee --debug /js/js2.js --map"
+
+            exec(cmd, (err, stdout, stderr)=>
+              expect(stdout.trim()).to.equal(body)
+              cb()
+            )
+          )
+          
       ],()->
         done()
       )

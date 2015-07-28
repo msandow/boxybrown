@@ -7,11 +7,11 @@ _console = require('./Console.coffee')
 
 module.exports = class ScssCss extends CompiledFile
  
-  setUp: () ->
+  setUp: (doBuild = true) ->
     @compiledStream = new StringFile('text/css')
     @compiledSourceMap = new StringFile('application/json') if @debug
     
-    @build()
+    @build() if doBuild
     
     @
 
@@ -51,3 +51,28 @@ module.exports = class ScssCss extends CompiledFile
         
         @compiling = false
       )
+
+
+  run: (cb) ->
+    @setUp(false)
+
+    sass.render(
+      file: @source
+      sourceMap: if @debug then @route + ".map" else undefined
+      outputStyle: 'compressed'
+      sourceMapContents: @debug
+    ,
+    (err, result) =>
+      if err
+        console.error(err.message)
+        cb.call(@)
+        return
+
+      if @debug
+        @compiledStream.set(result.css.toString().replace(/(sourceMappingURL=)(.+?)(\s\*\/)/gm, "$1#{@route}.map$3"))
+        @compiledSourceMap.set(result.map.toString())
+      else
+        @compiledStream.set(result.css.toString())
+
+      cb.call(@)
+    )

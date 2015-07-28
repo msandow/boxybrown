@@ -3,6 +3,8 @@ expect = require('chai').expect
 base = require('./base.coffee')
 Boxy = require('./../lib/BoxyBrown.coffee')
 async = require('async')
+exec = require('child_process').exec
+
 
 suite = new base().set(
   'LessCss':
@@ -85,5 +87,31 @@ suite = new base().set(
         done()
       )
 
+
+    'Should compare CLI and server output': (done) ->
+      async.series([
+        (cb)=>
+          @request('/css/css2.css', (err, response, body)=>
+            cmd = "bin/lesscss tests/files/basic.less --debug /css/css2.css"
+
+            exec(cmd, (err, stdout, stderr)=>
+              expect(stdout.trim()).to.equal(body)
+              cb()
+            )
+          )
+          
+        (cb)=>
+          @request('/css/css2.css.map', (err, response, body)=>
+            cmd = "bin/lesscss tests/files/basic.less --debug /css/css2.css --map"
+
+            exec(cmd, (err, stdout, stderr)=>
+              expect(stdout.trim()).to.equal(body)
+              cb()
+            )
+          )
+          
+      ],()->
+        done()
+      )
 
 ).test()

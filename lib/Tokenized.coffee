@@ -7,11 +7,11 @@ TokenReplacer = require('./Utils').TokenReplacer
 
 module.exports = class Tokenized extends CompiledFile
  
-  setUp: () ->
+  setUp: (doBuild = true) ->
     @compiledStream = new StringFile(mime.lookup(@source))
     @sourceFiles = [@source]
     @setUpWatchers() if @debug
-    @build() if typeof @tokens isnt 'function'
+    @build() if typeof @tokens isnt 'function' and doBuild
     
     @
 

@@ -9,11 +9,11 @@ path = require('path')
 
 module.exports = class LessCss extends CompiledFile
  
-  setUp: () ->
+  setUp: (doBuild = true) ->
     @compiledStream = new StringFile('text/css')
     @compiledSourceMap = new StringFile('application/json') if @debug
     
-    @build()
+    @build() if doBuild
     
     @
 
@@ -61,5 +61,38 @@ module.exports = class LessCss extends CompiledFile
             _console.info("#{@source} compiled") if @debug and not @silent
 
             @compiling = false
+        )
+      )
+
+  run: (cb) ->
+    @setUp(false)
+    
+    fs.readFile(@source, 'utf8', (err, data)=>
+        if err
+          console.error(err.message)
+          cb.call(@)
+          return
+ 
+        opts =  
+          filename: path.resolve(@source)
+        
+        if @debug
+          opts.sourceMap = 
+            sourceMapURL: @route + ".map"
+            outputSourceFiles: true
+
+        less.render(data, opts,
+          (err, result) =>
+            if err
+              console.error(err.message)
+              cb.call(@)
+              return
+            
+            @compiledStream.set(result.css)
+            
+            if @debug
+              @compiledSourceMap.set(result.map)
+            
+            cb.call(@)
         )
       )

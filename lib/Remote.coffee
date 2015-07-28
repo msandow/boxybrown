@@ -6,9 +6,9 @@ request = require('request')
 
 module.exports = class Remote extends CompiledFile
  
-  setUp: () ->
+  setUp: (doBuild = true) ->
     @compiledStream = new StringFile('text/html')
-    @build()
+    @build() if doBuild
     
     @
 
