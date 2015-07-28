@@ -104,6 +104,7 @@ suite = new base().set(
         (cb)=>
           @request('/js/js2.js.map', (err, response, body)=>
             expect(response.statusCode).to.equal(200)
+            expect(body.indexOf('//# sourceMappingURL=')).to.equal(-1)
             expect(body.indexOf('"/Users/msandow/BoxyBrown/tests/files/basic.coffee"')).to.be.above(-1)
             
             cb()
