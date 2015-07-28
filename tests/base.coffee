@@ -25,7 +25,12 @@ module.exports = class
     @
   
   request: (url, cb)->
-    request('http://localhost:'+@port+url, cb)
+    if typeof url is 'object'
+      url.url = 'http://localhost:' + @port + url.url
+    else
+      url = 'http://localhost:' + @port + url
+      
+    request(url, cb)
     @
   
   test: ->

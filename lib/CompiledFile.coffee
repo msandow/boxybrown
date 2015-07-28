@@ -13,6 +13,11 @@ module.exports = class CompiledFile
     @sourceFiles = []
     @hasBuildError = false
     @withWatchers = {}
+    
+    if conf.ttl
+      setInterval(=>
+        @build()
+      , conf.ttl)
 
 
   setUp: () ->

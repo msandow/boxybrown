@@ -13,7 +13,7 @@ module.exports = class Remote extends CompiledFile
     @
 
 
-  build: (cb=(->)) ->
+  build: () ->
     if !@compiling
       @compiling = true
       @compiledStream.reset()
@@ -22,10 +22,10 @@ module.exports = class Remote extends CompiledFile
         @compiling = false
         
         if err or response.statusCode >= 400
-          _console.error(err)
+          _console.error(err or response.statusCode) unless @silent
           return
         
         @compiledStream.contentType = response?.headers?['content-type']
         @compiledStream.set(body)
-        _console.info("#{@source} fetched remotely") if @debug
+        _console.info("#{@source} fetched remotely") if @debug and not @silent
       )

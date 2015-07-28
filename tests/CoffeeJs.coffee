@@ -51,6 +51,32 @@ suite = new base().set(
       )
 
 
+    'Should serve status codes for ETAGs': (done) ->
+      async.series([
+        (cb)=>
+          @request('/js/js.js', (err, response, body)=>
+            expect(response.headers.etag).to.equal("bdf70845c9e7088cfbd64981ecdd8c32")
+            expect(response.statusCode).to.equal(200)
+            expect(body.length).to.be.above(0)
+            cb()
+          )
+          
+        (cb)=>
+          @request({
+            url: '/js/js.js'
+            headers:
+              'if-none-match': 'bdf70845c9e7088cfbd64981ecdd8c32'
+          }, (err, response, body)=>
+            expect(response.statusCode).to.equal(304)
+            expect(body.length).to.equal(0)
+            cb()
+          )
+          
+      ], ()->
+        done()
+      )
+
+
     'Should serve JS on route with map': (done) ->
       
       @router.use(Boxy.CoffeeJs(
