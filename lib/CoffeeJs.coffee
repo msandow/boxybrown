@@ -11,7 +11,7 @@ module.exports = class CoffeeJs extends CompiledFile
 
   buildSourceMap: () ->
     target = "sourceMappingURL="
-    point = @compiledStream.indexOf(target) + target.length
+    point = @compiledStream.lastIndexOf(target) + target.length
     
     ob = {
       js: @compiledStream.substring(0, point) + "#{@route}.map"
@@ -20,7 +20,9 @@ module.exports = class CoffeeJs extends CompiledFile
     
     ob.map = ob.map.substring("data:application/json;base64,".length)
     
-    @compiledStream.set(ob.js)
+    @compiledStream.set(
+      ob.js.replace(/\/\/# sourceMappingURL=data:application\/json[\w\W]+?(\r|\n|\r\n)/gim, '$1')
+    )
     @compiledSourceMap.set(new Buffer(ob.map, 'base64').toString())
 
 

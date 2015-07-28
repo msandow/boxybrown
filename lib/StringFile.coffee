@@ -22,3 +22,6 @@ module.exports = class StringFile
     
   substring: ()->
     @contents.substring.apply(@contents, arguments)
+    
+  lastIndexOf: ()->
+    @contents.lastIndexOf.apply(@contents, arguments)
