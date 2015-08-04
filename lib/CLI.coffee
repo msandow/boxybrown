@@ -2,6 +2,7 @@ path = require('path')
 args = process.argv
 BuildConfigs = require('./BuildConfigs.coffee')
 CoffeeJs = require('./CoffeeJs.coffee')
+Js = require('./Js.coffee')
 ScssCss = require('./ScssCss.coffee')
 LessCss = require('./LessCss.coffee')
 clz = null
@@ -29,6 +30,8 @@ module.exports = ()->
     when '/coffeejs'
       conf.route = conf.route.replace('.coffee','.js')
       clz = CoffeeJs
+    when '/js'
+      clz = Js
     when '/scsscss'
       conf.route = conf.route.replace('.scss','.css')
       clz = ScssCss

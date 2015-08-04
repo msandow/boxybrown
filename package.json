@@ -30,6 +30,7 @@
   },
   "bin": {
     "coffeejs": "./bin/coffeejs",
+    "js": "./bin/js",
     "lesscss": "./bin/lesscss",
     "scsscss": "./bin/scsscss"
   }

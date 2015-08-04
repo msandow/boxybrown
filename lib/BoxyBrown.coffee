@@ -1,4 +1,5 @@
 CoffeeJs = require('./CoffeeJs.coffee')
+Js = require('./Js.coffee')
 ScssCss = require('./ScssCss.coffee')
 LessCss = require('./LessCss.coffee')
 Tokenized = require('./Tokenized.coffee')
@@ -10,6 +11,10 @@ BuildConfigs = require('./BuildConfigs.coffee')
 module.exports =
   CoffeeJs: (conf = {}) ->
     virtual = new CoffeeJs(BuildConfigs(conf))
+    virtual.setUp().express()
+
+  Js: (conf = {}) ->
+    virtual = new Js(BuildConfigs(conf))
     virtual.setUp().express()
 
   ScssCss: (conf = {}) ->

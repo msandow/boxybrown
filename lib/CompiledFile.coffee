@@ -53,7 +53,7 @@ module.exports = class CompiledFile
 
 
 
-  build: () ->
+  build: (cb=(->)) ->
     true
 
 
