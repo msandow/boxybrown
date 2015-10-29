@@ -44,7 +44,11 @@ module.exports = class LessCss extends CompiledFile
         less.render(data, opts,
           (err, result) =>
             if err
-              @onBuildError(err.message)
+              msg = err.message
+              msg += " - #{err.file}" if err.file isnt undefined
+              msg += " #{err.line}:#{err.column}" if err.line isnt undefined
+
+              @onBuildError(msg)
               @compiling = false
               @hasBuildError = true
               return
