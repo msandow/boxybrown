@@ -1,5 +1,5 @@
 fs = require('fs')
-_console = require('./Console.coffee')
+_console = require('PrettyConsole')
 
 module.exports = class CompiledFile
 

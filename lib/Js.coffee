@@ -2,7 +2,7 @@ CompiledFile = require('./CompiledFile.coffee')
 StringFile = require('./StringFile.coffee')
 browserify = require('browserify')
 arrayUnique = require('./Utils.coffee').arrayUnique
-_console = require('./Console.coffee')
+_console = require('PrettyConsole')
 uglifyify = require('uglifyify')
 
 

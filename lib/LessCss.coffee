@@ -3,7 +3,7 @@ StringFile = require('./StringFile.coffee')
 less = require('less')
 arrayUnique = require('./Utils.coffee').arrayUnique
 fs = require('fs')
-_console = require('./Console.coffee')
+_console = require('PrettyConsole')
 path = require('path')
 
 

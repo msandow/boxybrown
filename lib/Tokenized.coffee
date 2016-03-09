@@ -1,6 +1,6 @@
 CompiledFile = require('./CompiledFile.coffee')
 StringFile = require('./StringFile.coffee')
-_console = require('./Console.coffee')
+_console = require('PrettyConsole')
 mime = require('mime')
 TokenReplacer = require('./Utils').TokenReplacer
 
