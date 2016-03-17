@@ -115,4 +115,32 @@ suite = new base().set(
         done()
       )
 
+
+    'Should replace BASE64 Token': (done) ->
+      
+      @router.use(Boxy.LessCss(
+        route: '/css/css3.css'
+        source: "#{__dirname}/files/base64.less"
+        debug: false
+        silent: true
+      ))
+      
+      async.series([
+        (cb)=>
+          setTimeout(cb,@timeout)
+        
+        (cb)=>
+          @request('/css/css3.css', (err, response, body)=>
+            body = body.replace(/\r|\n|\r\n/gim, '')
+
+            expect(response.statusCode).to.equal(200)
+            expect(body.indexOf('data:image/png;base64,iVBORw0KG')).to.be.above(-1)
+
+            cb()
+          )
+
+      ],()->
+        done()
+      )
+
 ).test()

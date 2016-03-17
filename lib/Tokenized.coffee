@@ -2,6 +2,7 @@ CompiledFile = require('./CompiledFile.coffee')
 StringFile = require('./StringFile.coffee')
 _console = require('PrettyConsole')
 mime = require('mime')
+Base64 = require('./Base64.coffee')
 TokenReplacer = require('./Utils').TokenReplacer
 
 
@@ -23,16 +24,23 @@ module.exports = class Tokenized extends CompiledFile
       
       done = (tokens, cb)=>
         TokenReplacer(@source, tokens, (err, data)=>
-          @compiling = false
-
           if err
             _console.error(err)
             cb()
             return
+          
+          Base64.direct(data, @source, (err, newData)=>
+            @compiling = false
 
-          @compiledStream.set(data)
-          _console.info("#{@source} compiled with #{JSON.stringify(@tokens)}") if @debug
-          cb()
+            if err
+              _console.error(err)
+              cb()
+              return
+
+            @compiledStream.set(newData)
+            _console.info("#{@source} compiled with #{JSON.stringify(@tokens)}") if @debug
+            cb()
+          )
         )
       
       if typeof @tokens is 'function'

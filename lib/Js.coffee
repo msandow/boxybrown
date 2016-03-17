@@ -4,6 +4,7 @@ browserify = require('browserify')
 arrayUnique = require('./Utils.coffee').arrayUnique
 _console = require('PrettyConsole')
 uglifyify = require('uglifyify')
+Base64 = require('./Base64.coffee')
 
 
 module.exports = class CoffeeJs extends CompiledFile
@@ -30,6 +31,7 @@ module.exports = class CoffeeJs extends CompiledFile
     @compiledSourceMap = new StringFile('application/json') if @debug
     
     @B = browserify({debug: @debug})
+    @B.transform(Base64.transform)
     @B.transform(uglifyify)
     @B.add(@source)
     

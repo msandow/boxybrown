@@ -1,0 +1,5 @@
+This is some file content
+
+  User-agent: #{agent}
+  Disallow: #{disallow}
+  Src: %BASE64('#{image}')%

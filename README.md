@@ -42,3 +42,7 @@ Parameter | Usage
 `tokens` [Object] | For `Tokenized` files, this is the key / value pairs to search and replace in the `source` file. The key being the `#{key}` to search for, and replace with the value.
 `silent` [Boolean] | If true, disables logging of file compliation in the console.
 `ttl` [Integer] | A max time to store the compiled file for automatically rebuliding it. Useful for `Remote` files when you want to refresh from the source periodically.
+
+### Extra Features
+
+The following methods also support using special Base64 tokenization commands: `CoffeeJs`, `Js`, `ScssCss`, `LessCss`, `Tokenized`. In any of those files, you can add `%BASE64('FILE_PATH')%`, which at render time will be replaced with a Base64 string representation of `FILE_PATH` file.

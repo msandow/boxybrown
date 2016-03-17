@@ -5,6 +5,7 @@ arrayUnique = require('./Utils.coffee').arrayUnique
 fs = require('fs')
 _console = require('PrettyConsole')
 path = require('path')
+Base64 = require('./Base64.coffee')
 
 
 module.exports = class LessCss extends CompiledFile
@@ -32,7 +33,7 @@ module.exports = class LessCss extends CompiledFile
           @compiling = false
           @hasBuildError = true
           return
- 
+        
         opts =  
           filename: path.resolve(@source)
         
@@ -40,31 +41,35 @@ module.exports = class LessCss extends CompiledFile
           opts.sourceMap = 
             sourceMapURL: @route + ".map"
             outputSourceFiles: true
+        
+        Base64.direct(data, opts.filename, (err, newData)=>
 
-        less.render(data, opts,
-          (err, result) =>
-            if err
-              msg = err.message
-              msg += " - #{err.file}" if err.file isnt undefined
-              msg += " #{err.line}:#{err.column}" if err.line isnt undefined
+          less.render(newData, opts,
+            (err, result) =>
+              if err
+                msg = err.message
+                msg += " - #{err.file}" if err.file isnt undefined
+                msg += " #{err.line}:#{err.column}" if err.line isnt undefined
 
-              @onBuildError(msg)
+                @onBuildError(msg)
+                @compiling = false
+                @hasBuildError = true
+                return
+
+              @hasBuildError = false
+              @sourceFiles = arrayUnique(result.imports.concat(path.resolve(@source)))
+
+              @compiledStream.set(result.css)
+
+              if @debug
+                @compiledSourceMap.set(result.map)
+
+              @setUpWatchers() if @debug
+              _console.info("#{@source} compiled") if @debug and not @silent
+
               @compiling = false
-              @hasBuildError = true
-              return
+          )
 
-            @hasBuildError = false
-            @sourceFiles = arrayUnique(result.imports.concat(path.resolve(@source)))
-            
-            @compiledStream.set(result.css)
-            
-            if @debug
-              @compiledSourceMap.set(result.map)
-
-            @setUpWatchers() if @debug
-            _console.info("#{@source} compiled") if @debug and not @silent
-
-            @compiling = false
         )
       )
 
