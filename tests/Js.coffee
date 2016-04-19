@@ -140,30 +140,30 @@ suite = new base().set(
         done()
       )
 
-    'Should replace BASE64 Token': (done) ->
-      @router.use(Boxy.Js(
-        route: '/js/js3.js'
-        source: "#{__dirname}/files/base64.js"
-        debug: true
-        silent: true
-      ))
-      
-      async.series([
-        (cb)=>
-          setTimeout(cb,@timeout)
-        
-        (cb)=>
-          @request('/js/js3.js', (err, response, body)=>
-            expect(response.statusCode).to.equal(200)
-            expect(body.indexOf('data:image/png;base64,iVBORw0KG')).to.be.above(-1)
-            expect(body.indexOf('//# sourceMappingURL=/js/js3.js.map')).to.be.above(-1)
-            expect(body.indexOf('//# sourceMappingURL=')).to.equal(body.lastIndexOf('//# sourceMappingURL='))
-
-            cb()
-          )
-
-      ],()->
-        done()
-      )
+#    'Should replace BASE64 Token': (done) ->
+#      @router.use(Boxy.Js(
+#        route: '/js/js3.js'
+#        source: "#{__dirname}/files/base64.js"
+#        debug: true
+#        silent: true
+#      ))
+#      
+#      async.series([
+#        (cb)=>
+#          setTimeout(cb,@timeout)
+#        
+#        (cb)=>
+#          @request('/js/js3.js', (err, response, body)=>
+#            expect(response.statusCode).to.equal(200)
+#            expect(body.indexOf('data:image/png;base64,iVBORw0KG')).to.be.above(-1)
+#            expect(body.indexOf('//# sourceMappingURL=/js/js3.js.map')).to.be.above(-1)
+#            expect(body.indexOf('//# sourceMappingURL=')).to.equal(body.lastIndexOf('//# sourceMappingURL='))
+#
+#            cb()
+#          )
+#
+#      ],()->
+#        done()
+#      )
 
 ).test()

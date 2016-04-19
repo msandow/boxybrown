@@ -42,35 +42,35 @@ module.exports = class LessCss extends CompiledFile
             sourceMapURL: @route + ".map"
             outputSourceFiles: true
         
-        Base64.direct(data, opts.filename, (err, newData)=>
+#        Base64.direct(data, opts.filename, (err, newData)=>
 
-          less.render(newData, opts,
-            (err, result) =>
-              if err
-                msg = err.message
-                msg += " - #{err.file}" if err.file isnt undefined
-                msg += " #{err.line}:#{err.column}" if err.line isnt undefined
+        less.render(data, opts,
+          (err, result) =>
+            if err
+              msg = err.message
+              msg += " - #{err.file}" if err.file isnt undefined
+              msg += " #{err.line}:#{err.column}" if err.line isnt undefined
 
-                @onBuildError(msg)
-                @compiling = false
-                @hasBuildError = true
-                return
-
-              @hasBuildError = false
-              @sourceFiles = arrayUnique(result.imports.concat(path.resolve(@source)))
-
-              @compiledStream.set(result.css)
-
-              if @debug
-                @compiledSourceMap.set(result.map)
-
-              @setUpWatchers() if @debug
-              _console.info("#{@source} compiled") if @debug and not @silent
-
+              @onBuildError(msg)
               @compiling = false
-          )
+              @hasBuildError = true
+              return
 
+            @hasBuildError = false
+            @sourceFiles = arrayUnique(result.imports.concat(path.resolve(@source)))
+
+            @compiledStream.set(result.css)
+
+            if @debug
+              @compiledSourceMap.set(result.map)
+
+            @setUpWatchers() if @debug
+            _console.info("#{@source} compiled") if @debug and not @silent
+
+            @compiling = false
         )
+
+#        )
       )
 
   run: (cb) ->

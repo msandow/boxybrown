@@ -32,7 +32,7 @@ module.exports = class CoffeeJs extends CompiledFile
     @compiledSourceMap = new StringFile('application/json') if @debug
     
     @B = browserify({debug: @debug})
-    @B.transform(Base64.transform)
+    #@B.transform(Base64.transform)
     @B.transform(coffeeify)
     @B.transform(uglifyify)
     @B.add(@source)

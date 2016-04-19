@@ -27,60 +27,28 @@ module.exports = class ScssCss extends CompiledFile
       @sourceFiles = []
       
       fs.readFile(@source, 'utf8', (err, data)=>
-        Base64.direct(data, @source, (err, newData)=>
-          sass.render(
-            data: newData
-            sourceMap: if @debug then @route + ".map" else undefined
-            outputStyle: 'compressed'
-            sourceMapContents: @debug
-            includePaths: [path.dirname(@source)]
-          ,
-          (err, result) =>
-            if err
-              msg = err.message
-              msg += " - #{err.file}" if err.file isnt undefined
-              msg += " #{err.line}:#{err.column}" if err.line isnt undefined
-
-              @onBuildError(msg)
-              @compiling = false
-              @hasBuildError = true
-              return
-
-            @hasBuildError = false
-            @sourceFiles = arrayUnique(result.stats.includedFiles.concat(path.resolve(@source)))
-
-            if @debug
-              @compiledStream.set(result.css.toString().replace(/(sourceMappingURL=)(.+?)(\s\*\/)/gm, "$1#{@route}.map$3"))
-              @compiledSourceMap.set(result.map.toString())
-            else
-              @compiledStream.set(result.css.toString())
-
-            @setUpWatchers() if @debug
-            _console.info("#{@source} compiled") if @debug and not @silent
-
-            @compiling = false
-          )
-        )
-      )
-
-
-  run: (cb) ->
-    @setUp(false)
-    
-    fs.readFile(@source, 'utf8', (err, data)=>
-      Base64.direct(data, @source, (err, newData)=>
+#        Base64.direct(data, @source, (err, newData)=>
         sass.render(
-          data: newData
+          file: @source
+          #data: newData
           sourceMap: if @debug then @route + ".map" else undefined
           outputStyle: 'compressed'
           sourceMapContents: @debug
-          includePaths: [path.dirname(@source)]
+          #includePaths: [path.dirname(@source)]
         ,
         (err, result) =>
           if err
-            console.error(err.message)
-            cb.call(@)
+            msg = err.message
+            msg += " - #{err.file}" if err.file isnt undefined
+            msg += " #{err.line}:#{err.column}" if err.line isnt undefined
+
+            @onBuildError(msg)
+            @compiling = false
+            @hasBuildError = true
             return
+
+          @hasBuildError = false
+          @sourceFiles = arrayUnique(result.stats.includedFiles.concat(path.resolve(@source)))
 
           if @debug
             @compiledStream.set(result.css.toString().replace(/(sourceMappingURL=)(.+?)(\s\*\/)/gm, "$1#{@route}.map$3"))
@@ -88,7 +56,41 @@ module.exports = class ScssCss extends CompiledFile
           else
             @compiledStream.set(result.css.toString())
 
-          cb.call(@)
+          @setUpWatchers() if @debug
+          _console.info("#{@source} compiled") if @debug and not @silent
+
+          @compiling = false
         )
+#        )
       )
+
+
+  run: (cb) ->
+    @setUp(false)
+    
+    fs.readFile(@source, 'utf8', (err, data)=>
+#      Base64.direct(data, @source, (err, newData)=>
+      sass.render(
+        file: @source
+        #data: newData
+        sourceMap: if @debug then @route + ".map" else undefined
+        outputStyle: 'compressed'
+        sourceMapContents: @debug
+        #includePaths: [path.dirname(@source)]
+      ,
+      (err, result) =>
+        if err
+          console.error(err.message)
+          cb.call(@)
+          return
+
+        if @debug
+          @compiledStream.set(result.css.toString().replace(/(sourceMappingURL=)(.+?)(\s\*\/)/gm, "$1#{@route}.map$3"))
+          @compiledSourceMap.set(result.map.toString())
+        else
+          @compiledStream.set(result.css.toString())
+
+        cb.call(@)
+      )
+#      )
     )

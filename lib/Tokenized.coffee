@@ -29,18 +29,18 @@ module.exports = class Tokenized extends CompiledFile
             cb()
             return
           
-          Base64.direct(data, @source, (err, newData)=>
-            @compiling = false
+#          Base64.direct(data, @source, (err, newData)=>
+          @compiling = false
 
-            if err
-              _console.error(err)
-              cb()
-              return
-
-            @compiledStream.set(newData)
-            _console.info("#{@source} compiled with #{JSON.stringify(@tokens)}") if @debug
+          if err
+            _console.error(err)
             cb()
-          )
+            return
+
+          @compiledStream.set(data)
+          _console.info("#{@source} compiled with #{JSON.stringify(@tokens)}") if @debug
+          cb()
+#          )
         )
       
       if typeof @tokens is 'function'

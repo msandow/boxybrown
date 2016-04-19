@@ -81,33 +81,33 @@ This is some file content
         done()
       )
 
-    'Should replace BASE64 Token': (done) ->
-      
-      @router.use(Boxy.Tokenized(
-        route: '/sitemap3.text'
-        source: "#{__dirname}/files/base64.txt"
-        debug: false
-        silent: true
-        tokens: 
-          image: './test.png'
-      ))
-      
-      async.series([
-        (cb)=>
-          setTimeout(cb,@timeout)
-        
-        (cb)=>
-          @request('/sitemap3.text', (err, response, body)=>
-            expect(response.headers['content-type']).to.equal('text/plain')
-            expect(response.statusCode).to.equal(200)
-            expect(body.indexOf('data:image/png;base64,iVBORw0KG')).to.be.above(-1)
-
-            cb()
-          )
-
-      ],()->
-        done()
-      )
+#    'Should replace BASE64 Token': (done) ->
+#      
+#      @router.use(Boxy.Tokenized(
+#        route: '/sitemap3.text'
+#        source: "#{__dirname}/files/base64.txt"
+#        debug: false
+#        silent: true
+#        tokens: 
+#          image: './test.png'
+#      ))
+#      
+#      async.series([
+#        (cb)=>
+#          setTimeout(cb,@timeout)
+#        
+#        (cb)=>
+#          @request('/sitemap3.text', (err, response, body)=>
+#            expect(response.headers['content-type']).to.equal('text/plain')
+#            expect(response.statusCode).to.equal(200)
+#            expect(body.indexOf('data:image/png;base64,iVBORw0KG')).to.be.above(-1)
+#
+#            cb()
+#          )
+#
+#      ],()->
+#        done()
+#      )
 
 
 
