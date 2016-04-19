@@ -47,7 +47,7 @@ module.exports = class ScssCss extends CompiledFile
               return
 
             @hasBuildError = false
-            @sourceFiles = arrayUnique(result.stats.includedFiles)
+            @sourceFiles = arrayUnique(result.stats.includedFiles.concat(path.resolve(@source)))
 
             if @debug
               @compiledStream.set(result.css.toString().replace(/(sourceMappingURL=)(.+?)(\s\*\/)/gm, "$1#{@route}.map$3"))
