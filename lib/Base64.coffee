@@ -10,7 +10,7 @@ escapeRegExp = (str)->
   str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&")
 
 
-baseReg = /%BASE64\(['"][a-zA-Z0-9_\-.+?\/]+['"]\)%/m
+baseReg = /%BASE64\(['"][a-zA-Z0-9_\-.+?\/]+['"]\)%/mg
 
 
 base = {}
