@@ -3,6 +3,7 @@ path = require('path')
 mime = require('mime')
 async = require('async')
 through = require('through')
+_console = require('PrettyConsole')
 
 
 escapeRegExp = (str)->
@@ -27,8 +28,11 @@ base.direct = (str, sourcePath, cb)->
 
     for own k,v of matchHash
       do (k,v)->
-        matchHash[k] = (cb2)->          
+        matchHash[k] = (cb2)->
           fs.readFile(v, (err, data)->
+            if err
+              _console.error(err, v)
+              return cb2(err, false)
             cb2(err, "data:#{mime.lookup(v)};base64,#{new Buffer(data).toString('base64')}")
           )
     
