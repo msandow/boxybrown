@@ -21,7 +21,6 @@ module.exports = class ScssCss extends CompiledFile
 
   build: () ->
     if !@compiling
-    #Base64.direct(result.css.toString(), @source, (err, newData)=>
       @compiling = true
       @compiledStream.reset()
       @compiledSourceMap.reset() if @debug
