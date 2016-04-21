@@ -30,18 +30,17 @@ module.exports = class CompiledFile
         res.writeHead(424)
         res.end()
         return
+      
+      resOb = 
+        'ETag': stringFile.etag
+        'Content-Type': stringFile.contentType
+        'Cache-Control': 'must-revalidate, post-check=0, pre-check=0'
 
       if req.headers['if-none-match'] isnt undefined and req.headers['if-none-match'] is stringFile.etag
-        res.writeHead(304,
-          'ETag': stringFile.etag
-          'Content-Type': stringFile.contentType
-        )    
+        res.writeHead(304, resOb)    
         res.end()    
       else
-        res.writeHead(200,
-          'ETag': stringFile.etag
-          'Content-Type': stringFile.contentType
-        )
+        res.writeHead(200, resOb)
         res.end(stringFile.contents)
     
     if typeof @tokens is 'function'
