@@ -34,3 +34,5 @@ module.exports =
   Remote: (conf = {}) ->
     virtual = new Remote(BuildConfigs(conf))
     virtual.setUp().express()
+  
+  console: require('PrettyConsole')
