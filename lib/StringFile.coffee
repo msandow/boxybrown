@@ -1,7 +1,7 @@
 crypto = require('crypto')
 
 module.exports = class StringFile
-  constructor: (@contentType = 'application/octet') ->
+  constructor: (@contentType = 'application/json') ->
     @contents = ''
     @etag = ''
     @
