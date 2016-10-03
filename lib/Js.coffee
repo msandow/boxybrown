@@ -5,6 +5,7 @@ arrayUnique = require('./Utils.coffee').arrayUnique
 _console = require('PrettyConsole')
 uglifyify = require('uglifyify')
 Base64 = require('./Base64.coffee')
+path = require('path')
 
 
 module.exports = class CoffeeJs extends CompiledFile
@@ -70,7 +71,7 @@ module.exports = class CoffeeJs extends CompiledFile
           
           @buildSourceMap() if @debug
           @setUpWatchers() if @debug
-          _console.info("#{@source} compiled") if @debug and not @silent
+          _console.info("#{path.normalize(@source)} compiled") if @debug and not @silent
           
           @compiling = false
         )

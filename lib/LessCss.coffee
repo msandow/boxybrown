@@ -6,6 +6,7 @@ fs = require('fs')
 _console = require('PrettyConsole')
 path = require('path')
 Base64 = require('./Base64.coffee')
+path = require('path')
 
 
 module.exports = class LessCss extends CompiledFile
@@ -65,7 +66,7 @@ module.exports = class LessCss extends CompiledFile
               @compiledSourceMap.set(result.map)
 
             @setUpWatchers() if @debug
-            _console.info("#{@source} compiled") if @debug and not @silent
+            _console.info("#{path.normalize(@source)} compiled") if @debug and not @silent
 
             @compiling = false
         )

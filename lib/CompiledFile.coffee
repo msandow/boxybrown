@@ -25,6 +25,13 @@ module.exports = class CompiledFile
 
 
   responder: (stringFile, req, res) ->
+    if @compiling
+      setTimeout(=>
+        @responder(stringFile, req, res)
+      , 250)
+      
+      return
+    
     done = ()=>
       if @hasBuildError
         res.writeHead(424)
@@ -41,7 +48,7 @@ module.exports = class CompiledFile
         res.end()    
       else
         res.writeHead(200, resOb)
-        res.end(stringFile.contents)
+        res.end(if req.method isnt 'HEAD' then stringFile.contents else "")
     
     if typeof @tokens is 'function'
       @build(=>
@@ -64,10 +71,10 @@ module.exports = class CompiledFile
 
   express: () ->
     (req, res, next)=>
-      if req.method is 'GET' and req.originalUrl is @route
+      if (req.method is 'GET' or req.method is 'HEAD') and req.originalUrl is @route
         @responder(@compiledStream, req, res)
 
-      else if req.method is 'GET' and req.originalUrl is @route + ".map" and @debug
+      else if (req.method is 'GET' or req.method is 'HEAD') and req.originalUrl is @route + ".map" and @debug
         @responder(@compiledSourceMap, req, res)
         
       else
