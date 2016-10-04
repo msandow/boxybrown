@@ -34,7 +34,7 @@ module.exports = class CoffeeJs extends CompiledFile
     
     @B = browserify({debug: @debug})
     #@B.transform(Base64.transform)
-    @B.transform(coffeeify)
+    @B.transform(coffeeify, {sourceMap: false})
     @B.transform(uglifyify)
     @B.add(@source)
     
