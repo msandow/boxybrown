@@ -20,7 +20,7 @@ module.exports = class CoffeeJs extends CompiledFile
       map: @compiledStream.substring(point)
     }
     
-    ob.map = ob.map.substring("data:application/json;base64,".length)
+    ob.map = ob.map.substring("data:application/json;charset=utf-8;base64,".length).trim()
 
     @compiledStream.set(ob.js)
     @compiledSourceMap.set(new Buffer(ob.map, 'base64').toString())
