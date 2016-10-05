@@ -6,10 +6,21 @@ _console = require('PrettyConsole')
 uglifyify = require('uglifyify')
 coffeeify = require('coffeeify')
 Base64 = require('./Base64.coffee')
+fs = require('fs')
 path = require('path')
 
 
 module.exports = class CoffeeJs extends CompiledFile
+  
+  sourceMapReformat: ->
+    tree = JSON.parse(@compiledSourceMap.contents)
+    
+    for source, idx in tree.sources when /\.coffee$/.test(source)
+      tree.sourcesContent[idx] = fs.readFileSync(source, 'utf8').replace(/(\r|\n)/gim, '\\n')
+    
+    @compiledSourceMap.set(JSON.stringify(tree))
+
+
 
   buildSourceMap: () ->
     target = "sourceMappingURL="
@@ -24,15 +35,14 @@ module.exports = class CoffeeJs extends CompiledFile
 
     @compiledStream.set(ob.js)
     @compiledSourceMap.set(new Buffer(ob.map, 'base64').toString())
-
-
+    @sourceMapReformat()
 
 
   setUp: (doBuild = true) ->
     @compiledStream = new StringFile('text/javascript')
     @compiledSourceMap = new StringFile('application/json') if @debug
     
-    @B = browserify({debug: @debug})
+    @B = browserify({debug: @debug, extensions: ['.coffee']})
     #@B.transform(Base64.transform)
     @B.transform(coffeeify, {sourceMap: false})
     @B.transform(uglifyify)

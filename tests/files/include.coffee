@@ -1,1 +1,2 @@
-module.exports = [1,2,3]
+module.exports = do->
+  [1,2,3]

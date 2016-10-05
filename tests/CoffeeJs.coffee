@@ -55,7 +55,7 @@ suite = new base().set(
       async.series([
         (cb)=>
           @request('/js/js.js', (err, response, body)=>
-            expect(response.headers.etag).to.equal("36575d1156ea0e0058bacdab32e3039a")
+            expect(response.headers.etag).to.equal("09ba306a41613dfbcb3c2af1f7e707f4")
             expect(response.statusCode).to.equal(200)
             expect(body.length).to.be.above(0)
             cb()
@@ -65,7 +65,7 @@ suite = new base().set(
           @request({
             url: '/js/js.js'
             headers:
-              'if-none-match': '36575d1156ea0e0058bacdab32e3039a'
+              'if-none-match': '09ba306a41613dfbcb3c2af1f7e707f4'
           }, (err, response, body)=>
             expect(response.statusCode).to.equal(304)
             expect(body.length).to.equal(0)
@@ -105,6 +105,7 @@ suite = new base().set(
           @request('/js/js2.js.map', (err, response, body)=>
             expect(response.statusCode).to.equal(200)
             expect(body.indexOf('//# sourceMappingURL=')).to.equal(-1)
+            expect(body.indexOf('module.exports = do->')).to.be.above(-1)
             expect(body.indexOf('"/Users/msandow/BoxyBrown/tests/files/basic.coffee"')).to.be.above(-1)
             
             cb()
