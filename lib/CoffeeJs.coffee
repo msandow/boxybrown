@@ -16,7 +16,7 @@ module.exports = class CoffeeJs extends CompiledFile
     tree = JSON.parse(@compiledSourceMap.contents)
     
     for source, idx in tree.sources when /\.coffee$/.test(source)
-      tree.sourcesContent[idx] = fs.readFileSync(source, 'utf8').replace(/(\r|\n)/gim, '\\n')
+      tree.sourcesContent[idx] = fs.readFileSync(source, 'utf8')
     
     @compiledSourceMap.set(JSON.stringify(tree))
 
