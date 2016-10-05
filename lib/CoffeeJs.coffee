@@ -35,7 +35,7 @@ module.exports = class CoffeeJs extends CompiledFile
 
     @compiledStream.set(ob.js)
     @compiledSourceMap.set(new Buffer(ob.map, 'base64').toString())
-    @sourceMapReformat()
+    #@sourceMapReformat()
 
 
   setUp: (doBuild = true) ->
