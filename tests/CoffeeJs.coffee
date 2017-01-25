@@ -106,7 +106,7 @@ suite = new base().set(
             expect(response.statusCode).to.equal(200)
             expect(body.indexOf('//# sourceMappingURL=')).to.equal(-1)
             #expect(body.indexOf('module.exports = do->')).to.be.above(-1)
-            expect(body.indexOf('"/Users/msandow/BoxyBrown/tests/files/basic.coffee"')).to.be.above(-1)
+            expect(body.indexOf('"tests/files/basic.coffee"')).to.be.above(-1)
             
             cb()
           )
