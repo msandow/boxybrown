@@ -8,7 +8,7 @@ Base64 = require('./Base64.coffee')
 path = require('path')
 
 
-module.exports = class CoffeeJs extends CompiledFile
+module.exports = class Js extends CompiledFile
 
   buildSourceMap: () ->
     target = "sourceMappingURL="
@@ -33,7 +33,7 @@ module.exports = class CoffeeJs extends CompiledFile
     
     @B = browserify({debug: @debug})
     #@B.transform(Base64.transform)
-    @B.transform(uglifyify)
+    @B.transform(uglifyify, , { global: true  })
     @B.add(@source)
     
     @B.on('file', (file, id, parent)=>
