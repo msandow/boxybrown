@@ -33,7 +33,7 @@ module.exports = class Js extends CompiledFile
     
     @B = browserify({debug: @debug})
     #@B.transform(Base64.transform)
-    @B.transform(uglifyify, , { global: true  })
+    @B.transform(uglifyify, { global: true  })
     @B.add(@source)
     
     @B.on('file', (file, id, parent)=>
