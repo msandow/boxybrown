@@ -75,8 +75,8 @@ suite = new base().set(
         (cb)=>
           @request('/css/css2.css.map', (err, response, body)=>
             expect(response.statusCode).to.equal(200)
-            expect(body.indexOf('"../Users/msandow/BoxyBrown/tests/files/body.scss"')).to.be.above(-1)
-            expect(body.indexOf('"../Users/msandow/BoxyBrown/tests/files/body.scss"')).to.equal(body.lastIndexOf('"../Users/msandow/BoxyBrown/tests/files/body.scss"'))
+            expect(body.indexOf('BoxyBrown/tests/files/body.scss')).to.be.above(-1)
+            expect(body.indexOf('BoxyBrown/tests/files/body.scss')).to.equal(body.lastIndexOf('BoxyBrown/tests/files/body.scss'))
 
             cb()
           )

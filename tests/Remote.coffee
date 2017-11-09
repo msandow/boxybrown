@@ -11,7 +11,7 @@ suite = new base().set(
       remoteContent = "alert('foo');"
     
       @router.get('/fakefile.js', (req,res,next)->
-        res.set('Content-Type', 'application/javascript')
+        res.set('Content-Type', 'application/javascript; charset=utf-8')
         res.end(remoteContent)
       )
       
@@ -29,7 +29,7 @@ suite = new base().set(
         
         (cb)=>
           @request('/fetch.js', (err, response, body)=>
-            expect(response.headers['content-type']).to.equal('application/javascript')
+            expect(response.headers['content-type']).to.equal('application/javascript; charset=utf-8')
             expect(response.statusCode).to.equal(200)
             expect(body).to.equal("alert('foo');")
             
@@ -45,7 +45,7 @@ suite = new base().set(
         
         (cb)=>
           @request('/fetch.js', (err, response, body)=>
-            expect(response.headers['content-type']).to.equal('application/javascript')
+            expect(response.headers['content-type']).to.equal('application/javascript; charset=utf-8')
             expect(response.statusCode).to.equal(200)
             expect(body).to.equal("alert('bar');")
 
