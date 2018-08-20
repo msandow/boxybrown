@@ -140,6 +140,42 @@ suite = new base().set(
         done()
       )
 
+    'Should serve a single JS file': (done) ->
+
+      @router.use(Boxy.Js(
+        route: '/js/js3.js'
+        source: "#{__dirname}/files/single.js"
+        debug: true
+        silent: true
+      ))
+      
+      async.series([
+        (cb)=>
+          setTimeout(cb,@timeout)
+        
+        (cb)=>
+          @request('/js/js3.js', (err, response, body)=>
+            expect(response.statusCode).to.equal(200)
+            expect(body.indexOf('MODULE_NOT_FOUND')).to.be.above(-1)
+            expect(body.indexOf('console.info')).to.be.above(-1)
+            expect(body.indexOf('//# sourceMappingURL=/js/js3.js.map')).to.be.above(-1)
+
+            cb()
+          )
+          
+        (cb)=>
+          @request('/js/js3.js.map', (err, response, body)=>
+            expect(response.statusCode).to.equal(200)
+            expect(body.indexOf('//# sourceMappingURL=')).to.equal(-1)
+            expect(body.indexOf('"tests/files/single.js"')).to.be.above(-1)
+            
+            cb()
+          )
+
+      ],()->
+        done()
+      )
+
 #    'Should replace BASE64 Token': (done) ->
 #      @router.use(Boxy.Js(
 #        route: '/js/js3.js'
