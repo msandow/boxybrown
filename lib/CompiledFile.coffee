@@ -70,13 +70,13 @@ module.exports = class CompiledFile
 
 
   express: () ->
-    strippedQuery = @route.replace(/(\?.+)?$/gi, '')
-
     (req, res, next)=>
-      if (req.method is 'GET' or req.method is 'HEAD') and req.originalUrl is strippedQuery
+      strippedQuery = req.originalUrl.replace(/(\?.+)?$/gi, '')
+
+      if (req.method is 'GET' or req.method is 'HEAD') and strippedQuery is @route
         @responder(@compiledStream, req, res)
 
-      else if (req.method is 'GET' or req.method is 'HEAD') and req.originalUrl is strippedQuery + ".map" and @debug
+      else if (req.method is 'GET' or req.method is 'HEAD') and strippedQuery is @route + ".map" and @debug
         @responder(@compiledSourceMap, req, res)
         
       else
