@@ -55,7 +55,7 @@ suite = new base().set(
       async.series([
         (cb)=>
           @request('/js/js.js', (err, response, body)=>
-            expect(response.headers.etag).to.equal("2d718479c3602a020cafef814dcb7bab")
+            expect(response.headers.etag).to.equal("c3ae769fdfa3875307fd21e213bf1175")
             expect(response.statusCode).to.equal(200)
             expect(body.length).to.be.above(0)
             cb()
@@ -65,7 +65,7 @@ suite = new base().set(
           @request({
             url: '/js/js.js'
             headers:
-              'if-none-match': '2d718479c3602a020cafef814dcb7bab'
+              'if-none-match': 'c3ae769fdfa3875307fd21e213bf1175'
           }, (err, response, body)=>
             expect(response.statusCode).to.equal(304)
             expect(body.length).to.equal(0)
