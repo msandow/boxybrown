@@ -1,7 +1,7 @@
 {
   "name": "BoxyBrown",
   "description": "A simple tool for serving CoffeeScript and SASS files to browsers, complete with sourcemaps",
-  "version": "0.5.4",
+  "version": "0.5.5",
   "author": "Mitch Sandow",
   "main": "lib/BoxyBrown.js",
   "repository": {
@@ -10,6 +10,7 @@
   },
   "license": "MIT",
   "dependencies": {
+    "coffee-script": "=1.9.0",
     "uglifyify ": "=3.0.4",
     "browserify": "=14.0.0",
     "coffeeify": "=2.1.0",
@@ -24,8 +25,7 @@
   "devDependencies": {
     "mocha": "=2.0.1",
     "chai": "=1.9.2",
-    "express": "^4.11.1",
-    "coffee-script": "=1.9.0"
+    "express": "^4.11.1"
   },
   "scripts": {
     "test": "./node_modules/.bin/mocha tests/ --compilers coffee:coffee-script/register"
