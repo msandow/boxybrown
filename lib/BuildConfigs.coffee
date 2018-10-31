@@ -6,6 +6,7 @@ module.exports = (configs = {}) ->
     tokens: {}
     silent: false
     ttl: false
+    uglifyify: true
   
   clean.route = configs.route if configs.route isnt undefined
   clean.source = configs.source if configs.source isnt undefined
@@ -13,5 +14,6 @@ module.exports = (configs = {}) ->
   clean.tokens = configs.tokens if configs.tokens isnt undefined
   clean.silent = !!configs.silent if configs.silent isnt undefined
   clean.ttl = Math.max(parseInt(configs.ttl),1) if configs.ttl isnt undefined
+  clean.uglifyify = configs.uglifyify if configs.uglifyify isnt undefined 
   
   clean
