@@ -10,6 +10,7 @@ module.exports = class CompiledFile
     @silent = conf.silent
     @tokens = conf.tokens
     @uglifyify = conf.uglifyify
+    @secureProtocol = conf.secureProtocol
     @compiling = false
     @sourceFiles = []
     @hasBuildError = false

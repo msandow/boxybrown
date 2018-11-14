@@ -17,8 +17,15 @@ module.exports = class Remote extends CompiledFile
     if !@compiling
       @compiling = true
       @compiledStream.reset()
-      
-      request(@source, (err, response, body)=>
+
+      oo = 
+        url: @source
+
+      if @secureProtocol
+        oo.agentOptions =
+          secureProtocol: @secureProtocol
+
+      request(oo, (err, response, body)=>
         @compiling = false
         
         if err or response.statusCode >= 400
