@@ -15,15 +15,42 @@ module.exports = class CompiledFile
     @sourceFiles = []
     @hasBuildError = false
     @withWatchers = {}
-    
-    if conf.ttl
-      setInterval(=>
+
+    @killed = false
+
+    @tearDownItems =
+      intervals: []
+      watchers: []
+
+    if conf.ttl and !@killed
+      @tearDownItems.intervals.push(setInterval(=>
         @build()
-      , conf.ttl)
+      , conf.ttl))
+
+    for p in ['SIGINT', 'SIGTERM', 'SIGUSR1', 'SIGUSR2']
+      process.on(p, @tearDown.bind(@))
+
+    @
 
 
   setUp: () ->
     @
+
+
+  tearDown: ->
+    @killed = true
+
+    if @tearDownItems.intervals.length
+      _console.log(@route, "Clearing #{@tearDownItems.intervals.length} intervals")
+
+      while (i = @tearDownItems.intervals.shift()) != undefined
+        clearTimeout(i)
+
+    if @tearDownItems.watchers.length
+      _console.log(@route, "Closing #{@tearDownItems.watchers.length} watchers")
+
+      while (i = @tearDownItems.watchers.shift()) != undefined
+        i.close()
 
 
   responder: (stringFile, req, res) ->
@@ -105,9 +132,11 @@ module.exports = class CompiledFile
 
 
   setUpWatchers: () ->
+    return if @killed
+
     for source in @sourceFiles when @withWatchers[source] is undefined
       @withWatchers[source] = true
-      
-      fs.watch(source, ()=>
+
+      @tearDownItems.watchers.push(fs.watch(source, {persistent: false}, ()=>
         @build()
-      )
+      ))

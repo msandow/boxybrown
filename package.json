@@ -1,7 +1,7 @@
 {
   "name": "BoxyBrown",
   "description": "A simple tool for serving CoffeeScript and SASS files to browsers, complete with sourcemaps",
-  "version": "0.5.7",
+  "version": "0.6.0",
   "author": "Mitch Sandow",
   "main": "lib/BoxyBrown.js",
   "repository": {
