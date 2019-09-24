@@ -20,7 +20,7 @@ module.exports = class ScssCss extends CompiledFile
 
 
   build: () ->
-    if !@compiling
+    if !@compiling and !@killed
       @compiling = true
       @compiledStream.reset()
       @compiledSourceMap.reset() if @debug

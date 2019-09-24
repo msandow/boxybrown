@@ -18,7 +18,7 @@ module.exports = class Tokenized extends CompiledFile
 
 
   build: (cb=(->)) ->
-    if !@compiling
+    if !@compiling and !@killed
       @compiling = true
       @compiledStream.reset()
       

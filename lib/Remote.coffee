@@ -14,7 +14,7 @@ module.exports = class Remote extends CompiledFile
 
 
   build: () ->
-    if !@compiling
+    if !@compiling and !@killed
       @compiling = true
       @compiledStream.reset()
 
