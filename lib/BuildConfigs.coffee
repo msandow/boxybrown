@@ -8,6 +8,7 @@ module.exports = (configs = {}) ->
     ttl: false
     uglifyify: true
     secureProtocol: false
+    sassIncludePaths: []
   
   clean.route = configs.route if configs.route isnt undefined
   clean.source = configs.source if configs.source isnt undefined
@@ -17,5 +18,7 @@ module.exports = (configs = {}) ->
   clean.ttl = Math.max(parseInt(configs.ttl),1) if configs.ttl isnt undefined
   clean.uglifyify = configs.uglifyify if configs.uglifyify isnt undefined 
   clean.secureProtocol = configs.secureProtocol if configs.secureProtocol isnt undefined
+  clean.sassIncludePaths = configs.sassIncludePaths if configs.sassIncludePaths isnt undefined
+  
   
   clean

@@ -9,14 +9,30 @@ path = require('path')
 
 
 module.exports = class ScssCss extends CompiledFile
- 
+
+  constructor: (conf) ->
+    super(conf)
+    @sassIncludePaths = conf.sassIncludePaths
+    @
+
   setUp: (doBuild = true) ->
     @compiledStream = new StringFile('text/css')
     @compiledSourceMap = new StringFile('application/json') if @debug
     
     @build() if doBuild
-    
+
     @
+
+
+  getSassRenderConfigs: ->
+    {
+      file: @source
+      #data: newData
+      sourceMap: if @debug then @route + ".map" else undefined
+      outputStyle: 'compressed'
+      sourceMapContents: @debug
+      includePaths: @sassIncludePaths
+    }
 
 
   build: () ->
@@ -28,14 +44,7 @@ module.exports = class ScssCss extends CompiledFile
       
       fs.readFile(@source, 'utf8', (err, data)=>
 #        Base64.direct(data, @source, (err, newData)=>
-        sass.render(
-          file: @source
-          #data: newData
-          sourceMap: if @debug then @route + ".map" else undefined
-          outputStyle: 'compressed'
-          sourceMapContents: @debug
-          #includePaths: [path.dirname(@source)]
-        ,
+        sass.render(@getSassRenderConfigs(),
         (err, result) =>
           if err
             msg = err.message
@@ -70,14 +79,7 @@ module.exports = class ScssCss extends CompiledFile
     
     fs.readFile(@source, 'utf8', (err, data)=>
 #      Base64.direct(data, @source, (err, newData)=>
-      sass.render(
-        file: @source
-        #data: newData
-        sourceMap: if @debug then @route + ".map" else undefined
-        outputStyle: 'compressed'
-        sourceMapContents: @debug
-        #includePaths: [path.dirname(@source)]
-      ,
+      sass.render(@getSassRenderConfigs(),
       (err, result) =>
         if err
           console.error(err.message)
