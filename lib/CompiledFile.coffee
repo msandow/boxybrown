@@ -44,7 +44,7 @@ module.exports = class CompiledFile
       _console.log(@route, "Clearing #{@tearDownItems.intervals.length} intervals")
 
       while (i = @tearDownItems.intervals.shift()) != undefined
-        clearTimeout(i)
+        clearInterval(i)
 
     if @tearDownItems.watchers.length
       _console.log(@route, "Closing #{@tearDownItems.watchers.length} watchers")
