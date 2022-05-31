@@ -138,5 +138,7 @@ module.exports = class CompiledFile
       @withWatchers[source] = true
 
       @tearDownItems.watchers.push(fs.watch(source, {persistent: false}, ()=>
+        if !@compiling and !@killed
+          _console.log(@route, "Build triggered from #{source}")
         @build()
       ))
