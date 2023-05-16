@@ -19,7 +19,8 @@
     "request": "=2.51.0",
     "PrettyConsole": "git+https://git@github.com:msandow/prettyconsole.git",
     "async": "=1.2.1",
-    "through": "2.3.4"
+    "through": "2.3.4",
+    "tsify": "=5.0.4"
   },
   "devDependencies": {
     "mocha": "=2.0.1",
@@ -38,10 +39,12 @@
   },
   "postInstallJSONVersion": {
     "v6": {
-      "node-sass": "=4.7.2"
+      "node-sass": "=4.7.2",
+      "typescript": "=4.7.4"
     },
     "v14": {
-      "node-sass": "=4.14.0"
+      "node-sass": "=4.14.0",
+      "typescript": "=5.0.4"
     }
   }
 }

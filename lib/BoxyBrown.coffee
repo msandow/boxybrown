@@ -6,6 +6,7 @@ Tokenized = require('./Tokenized.coffee')
 TokenReplacer = require('./Utils').TokenReplacer
 Remote = require('./Remote.coffee')
 BuildConfigs = require('./BuildConfigs.coffee')
+TypescriptJs = require('./TypescriptJs.coffee')
 
 
 module.exports =
@@ -34,5 +35,9 @@ module.exports =
   Remote: (conf = {}) ->
     virtual = new Remote(BuildConfigs(conf))
     virtual.setUp().express()
-  
+
+  TypescriptJs: (conf = {}) ->
+    virtual = new TypescriptJs(BuildConfigs(conf))
+    virtual.setUp().express()
+
   console: require('PrettyConsole')

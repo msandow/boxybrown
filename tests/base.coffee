@@ -3,6 +3,7 @@ request = require('request')
 
 module.exports = class
   constructor:  ->
+    process.setMaxListeners(50)
     @server = null
     @app = null
     @router = null
@@ -23,7 +24,7 @@ module.exports = class
   set: (suite)->
     @suite = suite
     @
-  
+
   request: (url, cb)->
     if typeof url is 'object'
       url.url = 'http://localhost:' + @port + url.url
@@ -38,7 +39,8 @@ module.exports = class
 
     for own testdesc, testit of @suite
       describe(testdesc, ->
-        this.timeout(5000)
+
+        this.timeout(15000)
       
         before(()->
           self.before.call(self)

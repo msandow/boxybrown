@@ -5,6 +5,7 @@ CoffeeJs = require('./CoffeeJs.coffee')
 Js = require('./Js.coffee')
 ScssCss = require('./ScssCss.coffee')
 LessCss = require('./LessCss.coffee')
+TypescriptJs = require('./TypescriptJs.coffee')
 clz = null
 
 module.exports = ()->
@@ -24,8 +25,7 @@ module.exports = ()->
     idx = args.indexOf('--debug') > -1
     if args[idx + 1] and !/^--/.test(args[idx + 1])
       conf.route = args[idx + 1]
- 
-  
+
   switch script
     when '/coffeejs'
       conf.route = conf.route.replace('.coffee','.js')
@@ -38,6 +38,9 @@ module.exports = ()->
     when '/lesscss'
       conf.route = conf.route.replace('.less','.css')
       clz = LessCss
+    when '/typescriptjs'
+      conf.route = conf.route.replace('.ts','.js')
+      clz = TypescriptJs
   
   new clz(BuildConfigs(conf)).run(->
     if conf.debug and args.indexOf('--map') > -1
