@@ -4,13 +4,14 @@ browserify = require('browserify')
 arrayUnique = require('./Utils.coffee').arrayUnique
 _console = require('PrettyConsole')
 uglifyify = require('uglifyify')
+babelify = require('babelify')
 tsify = require('tsify')
 Base64 = require('./Base64.coffee')
 fs = require('fs')
 path = require('path')
 
 
-module.exports = class CoffeeJs extends CompiledFile
+module.exports = class TypescriptJs extends CompiledFile
   
   sourceMapReformat: ->
     tree = JSON.parse(@compiledSourceMap.contents)
@@ -42,8 +43,9 @@ module.exports = class CoffeeJs extends CompiledFile
     @compiledStream = new StringFile('text/javascript')
     @compiledSourceMap = new StringFile('application/json') if @debug
     
-    @B = browserify({debug: @debug})
+    @B = browserify({debug: @debug, extensions: @BROWSERIFY_EXTS})
     @B.plugin(tsify, { noImplicitAny: true, include: ["**/*.ts", "**/*.tsx"] })
+    @B.transform(babelify, {presets: ["@babel/preset-env", "@babel/preset-react"], extensions: @JSX_EXTS}) if @babelify
     @B.transform(uglifyify, { global: true, max_line_len: 150000 }) if @uglifyify
     @B.add(@source)
     

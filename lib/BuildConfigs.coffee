@@ -9,6 +9,7 @@ module.exports = (configs = {}) ->
     uglifyify: true
     secureProtocol: false
     sassIncludePaths: []
+    babelify: false
   
   clean.route = configs.route if configs.route isnt undefined
   clean.source = configs.source if configs.source isnt undefined
@@ -19,6 +20,7 @@ module.exports = (configs = {}) ->
   clean.uglifyify = configs.uglifyify if configs.uglifyify isnt undefined 
   clean.secureProtocol = configs.secureProtocol if configs.secureProtocol isnt undefined
   clean.sassIncludePaths = configs.sassIncludePaths if configs.sassIncludePaths isnt undefined
+  clean.babelify = configs.babelify if configs.babelify isnt undefined
   
   
   clean

@@ -51,8 +51,43 @@ suite = new base().set(
       )
 
 
+    'Should serve JS with JSX': (done) ->
+      
+      @router.use(Boxy.TypescriptJs(
+        route: '/js/js4.js'
+        source: "#{__dirname}/files/jsx.ts"
+        debug: false
+        silent: true
+        babelify: true
+      ))
+      
+      async.series([
+        (cb)=>
+          setTimeout(cb,@timeout)
+      
+        (cb)=>
+          @request('/js/js4.js', (err, response, body)=>
+            expect(response.statusCode).to.equal(200)
+            expect(/createElement\(['"]input/i.test(body)).to.equal(true)
+            expect(body.indexOf('sourceMappingURL')).to.equal(-1)
+
+            cb()
+          )
+          
+        (cb)=>
+          @request('/js/js4.js.map', (err, response, body)=>
+            expect(response.statusCode).to.equal(404)
+
+            cb()
+          )
+
+      ],()->
+        done()
+      )
+
+
     'Should serve status codes for ETAGs': (done) ->
-      tag = "64d3ffd31b8696fffdeb699e322abdf7"
+      tag = "7f63a212da8a01c16b0afa5963bc31ba"
 
       async.series([
         (cb)=>

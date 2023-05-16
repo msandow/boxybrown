@@ -4,6 +4,7 @@ browserify = require('browserify')
 arrayUnique = require('./Utils.coffee').arrayUnique
 _console = require('PrettyConsole')
 uglifyify = require('uglifyify')
+babelify = require('babelify')
 Base64 = require('./Base64.coffee')
 path = require('path')
 
@@ -31,8 +32,9 @@ module.exports = class Js extends CompiledFile
     @compiledStream = new StringFile('text/javascript')
     @compiledSourceMap = new StringFile('application/json') if @debug
     
-    @B = browserify({debug: @debug})
+    @B = browserify({debug: @debug, extensions: @BROWSERIFY_EXTS})
     #@B.transform(Base64.transform)
+    @B.transform(babelify, {presets: ["@babel/preset-env", "@babel/preset-react"], extensions: @JSX_EXTS}) if @babelify
     @B.transform(uglifyify, { global: true  }) if @uglifyify
     @B.add(@source)
     
