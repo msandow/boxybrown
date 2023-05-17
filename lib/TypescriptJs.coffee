@@ -28,14 +28,15 @@ module.exports = class TypescriptJs extends CompiledFile
     point = @compiledStream.lastIndexOf(target) + target.length
 
     ob = {
-      js: @compiledStream.substring(0, point) + "#{@route}.map"
+      #js: @compiledStream.substring(0, point) + "#{@route}.map"
+      js: @compiledStream.contents
       map: @compiledStream.substring(point)
     }
     
     ob.map = ob.map.substring("data:application/json;charset=utf-8;base64,".length).trim()
 
-    @compiledStream.set(ob.js)
-    @compiledSourceMap.set(new Buffer(ob.map, 'base64').toString().replace(/\/\/# sourceMappingURL=.*/gi, ''))
+    @compiledStream.set(ob.js.replace(/[\r\n]+$/gim, ''))
+    @compiledSourceMap.set(new Buffer(ob.map, 'base64').toString().replace(/\/\/# sourceMappingURL=.*/gi, '').replace(/[\r\n]+$/gim, ''))
     #@sourceMapReformat()
 
 

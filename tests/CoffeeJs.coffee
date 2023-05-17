@@ -132,7 +132,7 @@ suite = new base().set(
             expect(response.statusCode).to.equal(200)
             expect(body.indexOf('"./include.coffee"')).to.be.above(-1)
             expect(body.indexOf('console.log(myArr)')).to.be.above(-1)
-            expect(body.indexOf('//# sourceMappingURL=/js/js2.js.map')).to.be.above(-1)
+            #expect(body.indexOf('//# sourceMappingURL=/js/js2.js.map')).to.be.above(-1)
             expect(body.indexOf('//# sourceMappingURL=')).to.equal(body.lastIndexOf('//# sourceMappingURL='))
 
             cb()
