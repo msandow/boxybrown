@@ -19,13 +19,11 @@ module.exports = class Js extends CompiledFile
       js: @compiledStream.substring(0, point) + "#{@route}.map"
       map: @compiledStream.substring(point)
     }
-    
+
     ob.map = ob.map.substring("data:application/json;charset=utf-8;base64,".length).trim()
 
     @compiledStream.set(ob.js)
-    @compiledSourceMap.set(new Buffer(ob.map, 'base64').toString())
-
-
+    @compiledSourceMap.set(new Buffer(ob.map, 'base64').toString().replace(/\/\/# sourceMappingURL=.*/gi, ''))
 
 
   setUp: (doBuild = true) ->

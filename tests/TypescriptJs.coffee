@@ -87,7 +87,7 @@ suite = new base().set(
 
 
     'Should serve status codes for ETAGs': (done) ->
-      tag = "7f63a212da8a01c16b0afa5963bc31ba"
+      tag = "717b0b19f580aea480d699d409155252"
 
       async.series([
         (cb)=>

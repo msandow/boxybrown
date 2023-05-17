@@ -87,10 +87,12 @@ suite = new base().set(
 
 
     'Should serve status codes for ETAGs': (done) ->
+      tag = "60a3634cbcc1f1284184d6d83946e039"
+
       async.series([
         (cb)=>
           @request('/js/js.js', (err, response, body)=>
-            expect(response.headers.etag).to.equal("c3ae769fdfa3875307fd21e213bf1175")
+            expect(response.headers.etag).to.equal(tag)
             expect(response.statusCode).to.equal(200)
             expect(body.length).to.be.above(0)
             cb()
@@ -100,7 +102,7 @@ suite = new base().set(
           @request({
             url: '/js/js.js'
             headers:
-              'if-none-match': 'c3ae769fdfa3875307fd21e213bf1175'
+              'if-none-match': tag
           }, (err, response, body)=>
             expect(response.statusCode).to.equal(304)
             expect(body.length).to.equal(0)

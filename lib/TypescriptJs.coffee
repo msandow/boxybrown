@@ -35,7 +35,7 @@ module.exports = class TypescriptJs extends CompiledFile
     ob.map = ob.map.substring("data:application/json;charset=utf-8;base64,".length).trim()
 
     @compiledStream.set(ob.js)
-    @compiledSourceMap.set(new Buffer(ob.map, 'base64').toString())
+    @compiledSourceMap.set(new Buffer(ob.map, 'base64').toString().replace(/\/\/# sourceMappingURL=.*/gi, ''))
     #@sourceMapReformat()
 
 
@@ -46,7 +46,7 @@ module.exports = class TypescriptJs extends CompiledFile
     @B = browserify({debug: @debug, extensions: @BROWSERIFY_EXTS})
     @B.plugin(tsify, { noImplicitAny: true, include: ["**/*.ts", "**/*.tsx"] })
     @B.transform(babelify, {presets: ["@babel/preset-env", "@babel/preset-react"], extensions: @JSX_EXTS}) if @babelify
-    @B.transform(uglifyify, { global: true, max_line_len: 150000 }) if @uglifyify
+    @B.transform(uglifyify, { global: true }) if @uglifyify
     @B.add(@source)
     
     @B.on('file', (file, id, parent)=>

@@ -3,8 +3,8 @@ _console = require('PrettyConsole')
 
 module.exports = class CompiledFile
 
-  BROWSERIFY_EXTS: ['.js', '.coffee', '.ts', '.es', '.es6', '.jsx', '.babel', '.json']
-  JSX_EXTS: ['.js', '.ts', '.es', '.es6', '.jsx', '.babel']
+  BROWSERIFY_EXTS: ['.js', '.coffee', '.ts', '.tsx', '.es', '.es6', '.jsx', '.babel', '.json']
+  JSX_EXTS: ['.js', '.ts', '.tsx', '.es', '.es6', '.jsx', '.babel']
 
   constructor: (conf) ->
     @route = conf.route
