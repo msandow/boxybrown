@@ -47,8 +47,8 @@ module.exports = class CompiledFile
     point = ob.map.indexOf(",")
     ob.map = Buffer.from(ob.map.substring(point + 1), 'base64').toString('utf8')
 
-    ob.js = ob.js.replace(/[\r\n]+$/gim, '')
-    ob.map = ob.map.replace(/[\r\n]+$/gim, '')
+    #ob.js = ob.js.replace(/[\r\n]+$/gim, '')
+    #ob.map = ob.map.replace(/[\r\n]+$/gim, '')
 
     ob
 
