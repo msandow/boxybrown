@@ -1,5 +1,6 @@
 fs = require('fs')
 _console = require('PrettyConsole')
+cnv = require('convert-source-map')
 
 module.exports = class CompiledFile
 
@@ -35,6 +36,21 @@ module.exports = class CompiledFile
       process.on(p, @tearDown.bind(@))
 
     @
+
+
+  sourcemapify: (str)->
+    target = "sourceMappingURL="
+    point = @compiledStream.lastIndexOf(target) + target.length
+
+    ob = {js: str.substring(0, point) + "#{@route}.map", map: str.substring(point)}
+
+    point = ob.map.indexOf(",")
+    ob.map = Buffer.from(ob.map.substring(point + 1), 'base64').toString('utf8')
+
+    ob.js = ob.js.replace(/[\r\n]+$/gim, '')
+    ob.map = ob.map.replace(/[\r\n]+$/gim, '')
+
+    ob
 
 
   setUp: () ->

@@ -87,7 +87,7 @@ suite = new base().set(
 
 
     'Should serve status codes for ETAGs': (done) ->
-      tag = "60a3634cbcc1f1284184d6d83946e039"
+      tag = "c3ae769fdfa3875307fd21e213bf1175"
 
       async.series([
         (cb)=>
@@ -132,7 +132,7 @@ suite = new base().set(
             expect(response.statusCode).to.equal(200)
             expect(body.indexOf('"./include.js"')).to.be.above(-1)
             expect(body.indexOf('console.log(myArr)')).to.be.above(-1)
-            #expect(body.indexOf('//# sourceMappingURL=/js/js2.js.map')).to.be.above(-1)
+            expect(body.indexOf('//# sourceMappingURL=/js/js2.js.map')).to.be.above(-1)
             expect(body.indexOf('//# sourceMappingURL=')).to.equal(body.lastIndexOf('//# sourceMappingURL='))
 
             cb()
@@ -195,7 +195,7 @@ suite = new base().set(
             expect(response.statusCode).to.equal(200)
             expect(body.indexOf('MODULE_NOT_FOUND')).to.be.above(-1)
             expect(body.indexOf('console.info')).to.be.above(-1)
-            #expect(body.indexOf('//# sourceMappingURL=/js/js3.js.map')).to.be.above(-1)
+            expect(body.indexOf('//# sourceMappingURL=/js/js3.js.map')).to.be.above(-1)
 
             cb()
           )
@@ -204,7 +204,7 @@ suite = new base().set(
           @request('/js/js3.js.map', (err, response, body)=>
             expect(response.statusCode).to.equal(200)
             #expect(body.indexOf('//# sourceMappingURL=')).to.equal(-1)
-            #expect(body.indexOf('"tests/files/single.js"')).to.be.above(-1)
+            expect(body.indexOf('"tests/files/single.js"')).to.be.above(-1)
             
             cb()
           )

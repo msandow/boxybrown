@@ -87,7 +87,7 @@ suite = new base().set(
 
 
     'Should serve status codes for ETAGs': (done) ->
-      tag = "717b0b19f580aea480d699d409155252"
+      tag = "7f63a212da8a01c16b0afa5963bc31ba"
 
       async.series([
         (cb)=>
@@ -132,7 +132,7 @@ suite = new base().set(
             expect(response.statusCode).to.equal(200)
             expect(body.indexOf('"./include"')).to.be.above(-1)
             expect(body.indexOf('console.log(')).to.be.above(-1)
-            #expect(body.indexOf('//# sourceMappingURL=/js/js2.js.map')).to.be.above(-1)
+            expect(body.indexOf('//# sourceMappingURL=/js/js2.js.map')).to.be.above(-1)
             expect(body.indexOf('//# sourceMappingURL=')).to.equal(body.lastIndexOf('//# sourceMappingURL='))
 
             cb()
@@ -142,7 +142,6 @@ suite = new base().set(
           @request('/js/js2.js.map', (err, response, body)=>
             expect(response.statusCode).to.equal(200)
             expect(body.indexOf('//# sourceMappingURL=')).to.equal(-1)
-            #expect(body.indexOf('module.exports = do->')).to.be.above(-1)
             expect(body.indexOf('"tests/files/basic.ts"')).to.be.above(-1)
             
             cb()
